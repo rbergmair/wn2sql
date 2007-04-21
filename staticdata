@@ -1,0 +1,150 @@
+--
+-- wordnet2sql: software to convert data from WordNet(R)'s-Format to
+--              an SQL-Script for a relational DBMS.
+-- Copyright (C) 2002 -- 2007 Richard Bergmair
+--
+-- This library is free software; you can redistribute it and/or
+-- modify it under the terms of the GNU Lesser General Public
+-- License as published by the Free Software Foundation; either
+-- version 2.1 of the License, or (at your option) any later version.
+--
+-- This library is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+-- Lesser General Public License for more details.
+--
+-- You should have received a copy of the GNU Lesser General Public
+-- License along with this library; if not, write to the Free Software
+-- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+--
+
+
+
+INSERT INTO reltype VALUES (01, 'n', 'ANTONYM')
+INSERT INTO reltype VALUES (02, 'n', 'HYPERNYM')
+INSERT INTO reltype VALUES (03, 'n', 'INSTANCE HYPERNYM')
+INSERT INTO reltype VALUES (04, 'n', 'HYPONYNM')
+INSERT INTO reltype VALUES (05, 'n', 'INSTANCE HYPONYNM')
+INSERT INTO reltype VALUES (06, 'n', 'MEMBER HOLONYM')
+INSERT INTO reltype VALUES (07, 'n', 'SUBSTANCE HOLONYM')
+INSERT INTO reltype VALUES (08, 'n', 'PART HOLONYM')
+INSERT INTO reltype VALUES (09, 'n', 'MEMBER MERONYM')
+INSERT INTO reltype VALUES (10, 'n', 'SUBSTANCE MERONYM')
+INSERT INTO reltype VALUES (11, 'n', 'PART MERONYM')
+INSERT INTO reltype VALUES (12, 'n', 'ATTRIBUTE')
+
+INSERT INTO reltype VALUES (13, 'v', 'ANTONYM')
+INSERT INTO reltype VALUES (14, 'v', 'HYPERNYM')
+INSERT INTO reltype VALUES (15, 'v', 'HYPONYM')
+INSERT INTO reltype VALUES (16, 'v', 'ENTAILMENT')
+INSERT INTO reltype VALUES (17, 'v', 'CAUSE')
+INSERT INTO reltype VALUES (18, 'v', 'ALSO SEE')
+INSERT INTO reltype VALUES (19, 'v', 'VERB GROUP')
+
+INSERT INTO reltype VALUES (20, 'a', 'ANTONYM')
+INSERT INTO reltype VALUES (21, 'a', 'SIMILAR TO')
+INSERT INTO reltype VALUES (22, 'a', 'PARTICIPLE OF VERB')
+INSERT INTO reltype VALUES (23, 'a', 'PERTAINYM')
+INSERT INTO reltype VALUES (24, 'a', 'ATTRIBUTE')
+INSERT INTO reltype VALUES (25, 'a', 'ALSO SEE')
+
+INSERT INTO reltype VALUES (26, 'r', 'ANTONYM')
+INSERT INTO reltype VALUES (27, 'r', 'DERIVED FROM ADJECTIVE')
+
+INSERT INTO reltype VALUES (28, ' ', 'DERIVATIONALLY RELATED FORM')
+INSERT INTO reltype VALUES (29, ' ', 'DOMAIN OF SYNSET - TOPIC')
+INSERT INTO reltype VALUES (30, ' ', 'MEMBER OF DOMAIN - TOPIC')
+INSERT INTO reltype VALUES (31, ' ', 'DOMAIN OF SYNSET - REGION')
+INSERT INTO reltype VALUES (32, ' ', 'MEMBER OF DOMAIN - REGION')
+INSERT INTO reltype VALUES (33, ' ', 'DOMAIN OF SYNSET - USAGE')
+INSERT INTO reltype VALUES (34, ' ', 'MEMBER OF DOMAIN - USAGE')
+
+INSERT INTO frame VALUES (01, 'SOMETHING ----S')
+INSERT INTO frame VALUES (02, 'SOMEBODY ----S')
+INSERT INTO frame VALUES (03, 'IT IS ----ING')
+INSERT INTO frame VALUES (04, 'SOMETHING IS ----ING PP')
+INSERT INTO frame VALUES (05, 'SOMETHING ----S SOMETHING ADJECTIVE/NOUN')
+INSERT INTO frame VALUES (06, 'SOMETHING ----S ADJECTIVE/NOUN')
+INSERT INTO frame VALUES (07, 'SOMEBODY ----S ADJECTIVE')
+INSERT INTO frame VALUES (08, 'SOMEBODY ----S SOMETHING')
+INSERT INTO frame VALUES (09, 'SOMEBODY ----S SOMEBODY')
+INSERT INTO frame VALUES (10, 'SOMETHING ----S SOMEBODY')
+INSERT INTO frame VALUES (11, 'SOMETHING ----S SOMETHING')
+INSERT INTO frame VALUES (12, 'SOMETHING ----S TO SOMEBODY')
+INSERT INTO frame VALUES (13, 'SOMEBODY ----S ON SOMETHING')
+INSERT INTO frame VALUES (14, 'SOMEBODY ----S SOMEBODY SOMETHING')
+INSERT INTO frame VALUES (15, 'SOMEBODY ----S SOMETHING TO SOMEBODY')
+INSERT INTO frame VALUES (16, 'SOMEBODY ----S SOMETHING FROM SOMEBODY')
+INSERT INTO frame VALUES (17, 'SOMEBODY ----S SOMEBODY WITH SOMETHING')
+INSERT INTO frame VALUES (18, 'SOMEBODY ----S SOMEBODY OF SOMETHING')
+INSERT INTO frame VALUES (19, 'SOMEBODY ----S SOMETHING ON SOMEBODY')
+INSERT INTO frame VALUES (20, 'SOMEBODY ----S SOMEBODY PP')
+INSERT INTO frame VALUES (21, 'SOMEBODY ----S SOMETHING PP')
+INSERT INTO frame VALUES (22, 'SOMEBODY ----S PP')
+INSERT INTO frame VALUES (23, 'SOMEBODY<apo>S (BODY PART) ----S')
+INSERT INTO frame VALUES (24, 'SOMEBODY ----S SOMEBODY TO INFINITIVE')
+INSERT INTO frame VALUES (25, 'SOMEBODY ----S SOMEBODY INFINITIVE')
+INSERT INTO frame VALUES (26, 'SOMEBODY ----S THAT CLAUSE')
+INSERT INTO frame VALUES (27, 'SOMEBODY ----S TO SOMEBODY')
+INSERT INTO frame VALUES (28, 'SOMEBODY ----S TO INFINITIVE')
+INSERT INTO frame VALUES (29, 'SOMEBODY ----S WHETHER INFINITIVE')
+INSERT INTO frame VALUES (30, 'SOMEBODY ----S SOMEBODY INTO V-ING SOMETHING')
+INSERT INTO frame VALUES (31, 'SOMEBODY ----S SOMETHING WITH SOMETHING')
+INSERT INTO frame VALUES (32, 'SOMEBODY ----S INFINITIVE')
+INSERT INTO frame VALUES (33, 'SOMEBODY ----S VERB-ING')
+INSERT INTO frame VALUES (34, 'IT ----S THAT CLAUSE')
+INSERT INTO frame VALUES (35, 'SOMETHING ----S INFINITIVE')
+
+INSERT INTO lexname VALUES (00, 'adj.all', 'all adjective clusters')
+INSERT INTO lexname VALUES (01, 'adj.pert', 'relational adjectives (pertainyms)')
+INSERT INTO lexname VALUES (02, 'adv.all', 'all adverbs')
+INSERT INTO lexname VALUES (03, 'noun.Tops', 'unique beginners for nouns')
+INSERT INTO lexname VALUES (04, 'noun.act', 'nouns denoting acts or actions')
+INSERT INTO lexname VALUES (05, 'noun.animal', 'nouns denoting animals')
+INSERT INTO lexname VALUES (06, 'noun.artifact', 'nouns denoting man-made objects')
+INSERT INTO lexname VALUES (07, 'noun.attribute', 'nouns denoting attributes of people and objects')
+INSERT INTO lexname VALUES (08, 'noun.body', 'nouns denoting body parts')
+INSERT INTO lexname VALUES (09, 'noun.cognition', 'nouns denoting cognitive processes and contents')
+INSERT INTO lexname VALUES (10, 'noun.communication', 'nouns denoting communicative processes and contents')
+INSERT INTO lexname VALUES (11, 'noun.event', 'nouns denoting natural events')
+INSERT INTO lexname VALUES (12, 'noun.feeling', 'nouns denoting feelings and emotions')
+INSERT INTO lexname VALUES (13, 'noun.food', 'nouns denoting foods and drinks')
+INSERT INTO lexname VALUES (14, 'noun.group', 'nouns denoting groupings of people or objects')
+INSERT INTO lexname VALUES (15, 'noun.location', 'nouns denoting spatial position')
+INSERT INTO lexname VALUES (16, 'noun.motive', 'nouns denoting goals')
+INSERT INTO lexname VALUES (17, 'noun.object', 'nouns denoting natural objects (not man-made)')
+INSERT INTO lexname VALUES (18, 'noun.person', 'nouns denoting people')
+INSERT INTO lexname VALUES (19, 'noun.phenomenon', 'nouns denoting natural phenomena')
+INSERT INTO lexname VALUES (20, 'noun.plant', 'nouns denoting plants')
+INSERT INTO lexname VALUES (21, 'noun.possession', 'nouns denoting possession and transfer of possession')
+INSERT INTO lexname VALUES (22, 'noun.process', 'nouns denoting natural processes')
+INSERT INTO lexname VALUES (23, 'noun.quantity', 'nouns denoting quantities and units of measure')
+INSERT INTO lexname VALUES (24, 'noun.relation', 'nouns denoting relations between people or things or ideas')
+INSERT INTO lexname VALUES (25, 'noun.shape', 'nouns denoting two and three dimensional shapes')
+INSERT INTO lexname VALUES (26, 'noun.state', 'nouns denoting stable states of affairs')
+INSERT INTO lexname VALUES (27, 'noun.substance', 'nouns denoting substances')
+INSERT INTO lexname VALUES (28, 'noun.time', 'nouns denoting time and temporal relations')
+
+INSERT INTO lexname VALUES (29, 'verb.body', 'verbs of grooming<com> dressing and bodily care')
+INSERT INTO lexname VALUES (30, 'verb.change', 'verbs of size<com> temperature change<com> intensifying<com> etc.')
+INSERT INTO lexname VALUES (31, 'verb.cognition', 'verbs of thinking<com> judging<com> analyzing<com> doubting')
+INSERT INTO lexname VALUES (32, 'verb.communication', 'verbs of telling<com> asking<com> ordering<com> singing')
+INSERT INTO lexname VALUES (33, 'verb.competition', 'verbs of fighting<com> athletic activities')
+INSERT INTO lexname VALUES (34, 'verb.consumption', 'verbs of eating and drinking')
+INSERT INTO lexname VALUES (35, 'verb.contact', 'verbs of touching<com> hitting<com> tying<com> digging')
+INSERT INTO lexname VALUES (36, 'verb.creation', 'verbs of sewing<com> baking<com> painting<com> performing')
+INSERT INTO lexname VALUES (37, 'verb.emotion', 'verbs of feeling')
+INSERT INTO lexname VALUES (38, 'verb.motion', 'verbs of walking<com> flying<com> swimming')
+INSERT INTO lexname VALUES (39, 'verb.perception', 'verbs of seeing<com> hearing<com> feeling')
+INSERT INTO lexname VALUES (40, 'verb.possession', 'verbs of buying<com> selling<com> owning')
+INSERT INTO lexname VALUES (41, 'verb.social', 'verbs of political and social activities and events')
+INSERT INTO lexname VALUES (42, 'verb.stative', 'verbs of being<com> having<com> spatial relations')
+INSERT INTO lexname VALUES (43, 'verb.weather', 'verbs of raining<com> snowing<com> thawing<com> thundering')
+
+INSERT INTO lexname VALUES (44, 'adj.ppl', 'participial adjectives')
+
+
+
+--
+-- (c) Copyright 2002 -- 2007 by Richard Bergmair
+--

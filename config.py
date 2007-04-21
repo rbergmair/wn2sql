@@ -1,0 +1,2 @@
+DICTDIR="./dict";
+TMPDIR="./tmp";

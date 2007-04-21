@@ -1,0 +1,102 @@
+*******************************************************************************
+
+  wordnet2sql 0.99.4
+
+  SOURCE DOCUMENTATION
+
+*******************************************************************************
+
+
+
+Let's start off with a little graphic:
+
++------------------+
++ dictionary-files +
++-+----------------+
+  |
+  translatewn.py
+  |
++-+-------+ +------------+
+| rawdata | | staticdata |
++-------+-+ +-+----------+
+        |     |
+        +     +
+        \     /
+          \ /
+           |
+     +-----+------+
+     | data/*.bz2 |
+     +-----+------+
+           |
+       tomysql.sed
+           |
++----------+-------------+
+| data.mysql/*.mysql.bz2 |
++------------------------+
+
+1.  If you want to convert WordNet's data-files, first
+    thing you need is: WordNet!
+
+        You can get it from:
+        http://www.cogsci.princeton.edu/~wn/
+
+2.  Next thing: you have to tell wordnet2sql where to
+    find WordNet. You have to create a file called
+
+        config.py
+
+    This file might look like:
+
+        DICTDIR="/root/wn/dict"
+        TMPDIR="/tmp"
+
+    Use "make sampleconfig" to create this sample-config, and
+    edit the config.py afterwards.
+
+    DICTDIR is the directory, where translatewn.py expects
+    to find the data.* files from WordNet.
+    TMPDIR is the directory, where translatewn.py saves
+    some intermediate objects, for debug purposes only!
+    Just have a look at translatewn.py, to get an impression
+    of what exactly that is.
+
+3.  The above process may seem a bit complicated, but it
+    isn't at all. Actually the core of wordnet2sql is
+    translatewn.py, producing an SQL-File you could without
+    problems run against any dbms! Try out ./translatewn.py | mysql
+    if you don't believe me. The other make-targets are just
+    to create the convenient .bz2 and .mysql.bz2-files you
+    can find on the homepage.
+
+These are the make-targets:
+
+rawdata:
+  makes only the "rawdata"-file.
+
+tabs:
+  makes the files in data/*.tab
+
+mysql:
+  makes the files in data.mysql/*.mysql
+
+tabs-dist:
+  makes the files in dist/*.bz2
+
+mysql-dist:
+  makes the files in dist.mysql/*.mysql.bz2
+
+all:
+  makes all of the above
+
+clean:
+  cleans up everything
+
+
+
+*******************************************************************************
+                                         (c) Copyright 2007 by Richard Bergmair
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2 or
+any later version published by the Free Software Foundation;
+*******************************************************************************

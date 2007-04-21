@@ -1,0 +1,96 @@
+*******************************************************************************
+
+  wordnet2sql 0.99.4
+
+  INSTALLATION INSTRUCTIONS
+
+    (accelerated installation for MySQL server administrators)
+
+*******************************************************************************
+
+
+
+You should have these files:
+
+  ~/wn2sql-0.99.4-mysql # ls
+  INSTALL-MYSQL           lexname.mysql.bz2       sample.mysql.bz2
+  LICENSE                 lexrel.mysql.bz2        semrel.mysql.bz2
+  adjmod.mysql.bz2        lexverbframe.mysql.bz2  semverbframe.mysql.bz2
+  createtables.mysql.sql  loaddata.mysql.sql      sense.mysql.bz2
+  createtables.sql        optimizations.sql       synset.mysql.bz2
+  fk_constraints.sql      pk_constraints.sql      word.mysql.bz2
+  frame.mysql.bz2         reltype.mysql.bz2
+  ~/wn2sql-0.99.4-mysql #
+
+The following command sequences give you an idea
+of how the installation might work depending on
+your network setup, and user setup you will have
+to adapt it though.
+
+
+
+------------------------------------------------
+
+  NOTE: THIS INSTALLATION ROUTINE ASSUMES,
+  YOU HAVE ACCESS TO THE MYSQL DATABASE
+  FILESPACE. IF YOU CANNOT WRITE FILES TO
+  
+    /var/lib/mysql/<yourdb>
+    
+  ON YOUR DB SERVER, YOU PROBABLY WANT THE
+  STANDARD INSTALLATION FOR WHICH YOU WILL
+  HAVE TO USE THE PACKAGE
+
+    wn2sql-0.99.4.tar
+
+  INSTEAD OF THIS ONE.
+
+------------------------------------------------
+
+
+
+First, create a database for the wordnet data, if
+you don't already have one.
+
+  ~/wn2sql-0.99.4-mysql # echo "create database wn2sql" | mysql
+  ~/wn2sql-0.99.4-mysql # bunzip2 *.mysql.bz2
+  ~/wn2sql-0.99.4-mysql # cp *.mysql /var/lib/mysql/wn2sql
+  ~/wn2sql-0.99.4-mysql #
+
+Then, you have to run a couple of scripts to create
+the tables and primary key constraints.
+
+  ~/wn2sql-0.99.4-mysql # cat createtables.mysql.sql | mysql wn2sql
+  ~/wn2sql-0.99.4-mysql # cat pk_constraints.sql | mysql wn2sql
+  ~/wn2sql-0.99.4-mysql #
+
+Then you can use MySQL's "LOAD DATA" command, to mass import the
+wn2sql data, much more quickly than using INSERT statements.
+
+  ~/wn2sql-0.99.4-mysql # cat loaddata.mysql.sql | mysql wn2sql
+  ~/wn2sql-0.99.4-mysql #
+
+Next, we can put some foreign key constraints in place
+  
+  ~/wn2sql-0.99.4-mysql # cat fk_constraints.sql | mysql wn2sql
+  ~/wn2sql-0.99.4-mysql #
+
+A few indices can speed up processing
+
+  ~/wn2sql-0.99.4-mysql # cat optimizations.sql | mysql -u root wn2sql
+  ~/wn2sql-0.99.4-mysql #
+
+Finally, you can remove the imported files
+
+  ~/wn2sql-0.99.4-mysql # rm /var/lib/mysql/wn2sql/*.mysql
+  ~/wn2sql-0.99.4-mysql #
+
+
+
+*******************************************************************************
+                                         (c) Copyright 2007 by Richard Bergmair
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2 or
+any later version published by the Free Software Foundation;
+*******************************************************************************

@@ -1,0 +1,170 @@
+*******************************************************************************
+
+  wordnet2sql 0.99.4
+
+  INSTALLATION INSTRUCTIONS
+
+    (standard installation)
+
+*******************************************************************************
+
+
+
+You should have these files:
+
+  ~/wn2sql-0.99.4 $ ls
+  INSTALL                 lexname.bz2         sample.bz2
+  LICENSE                 lexrel.bz2          semrel.bz2
+  adjmod.bz2              lexverbframe.bz2    semverbframe.bz2
+  createtables.mysql.sql  mysql.sh            sense.bz2
+  createtables.sql        optimizations.sql   synset.bz2
+  db2.sh                  pgsql.sh            word.bz2
+  fk_constraints.sql      pk_constraints.sql
+  frame.bz2               reltype.bz2
+  ~/wn2sql-0.99.4 $
+
+The following command sequences give you an
+idea of how the installation might work for
+different database systems. Depending on your
+database, network setup, and user setup you
+will have to adapt it though.
+
+
+
+*******************************************************************************
+  MYSQL
+*******************************************************************************
+
+
+
+------------------------------------------------
+
+  NOTE: THIS INSTALLATION ROUTINE ASSUMES,
+  YOU DON'T HAVE ACCESS TO THE MYSQL DATABASE
+  FILESPACE. IF YOU CAN WRITE FILES TO
+  
+    /var/lib/mysql/<yourdb>
+    
+  ON YOUR DB SERVER, YOU PROBABLY WANT THE
+  ACCELERATED INSTALLATION FOR MYSQL, FOR
+  WHICH YOU WILL HAVE TO USE THE PACKAGE
+
+    wn2sql-0.99.4-mysql.tar
+
+  INSTEAD OF THIS ONE.
+
+------------------------------------------------
+
+
+
+First, create a database for the wordnet data, if
+you don't already have one.
+
+  ~/wn2sql-0.99.4 $ echo "create database wn2sql" | mysql -u root
+  ~/wn2sql-0.99.4 $
+
+Then, you have to run a couple of scripts to create
+the tables and primary key constraints.
+
+  ~/wn2sql-0.99.4 $ cat createtables.mysql.sql | mysql -u root wn2sql
+  ~/wn2sql-0.99.4 $ cat pk_constraints.sql | mysql -u root wn2sql
+  ~/wn2sql-0.99.4 $
+
+Use the appropriate inserter script to create a bunch
+of INSERT statements which we pipe through the db client.
+
+  ~/wn2sql-0.99.4 $ ./mysql.sh | mysql -u root wn2sql
+  ~/wn2sql-0.99.4 $
+
+Now, make yourself a nice cup of tea: This will take some time!
+
+Next, we can put some foreign key constraints in place
+
+  ~/wn2sql-0.99.4 $ cat fk_constraints.sql | mysql -u root wn2sql
+  ~/wn2sql-0.99.4 $
+
+Finally, a few indices can speed up processing
+
+  ~/wn2sql-0.99.4 $ cat optimizations.sql | mysql -u root wn2sql
+
+
+
+*******************************************************************************
+  PostgreSQL
+*******************************************************************************
+
+
+
+First, create a database for the wordnet data, if
+you don't already have one.
+
+  ~/wn2sql-0.99.4 $ echo "create database wn2sql" | psql
+  ~/wn2sql-0.99.4 $
+
+Then, you have to run a couple of scripts to create
+the tables and primary key constraints.
+
+  ~/wn2sql-0.99.4 $ cat createtables.sql | psql wn2sql
+  ~/wn2sql-0.99.4 $ cat pk_constraints.sql | psql wn2sql
+  ~/wn2sql-0.99.4 $
+
+Use the appropriate inserter script to create a bunch
+of INSERT statements which we pipe through the db client.
+
+  ~/wn2sql-0.99.4 $ ./psql.sh | psql wn2sql | grep -v ' 1'
+    [ ... ]
+  ~/wn2sql-0.99.4 $
+
+Next, we can put some foreign key constraints in place
+
+  ~/wn2sql-0.99.4 $ cat fk_constraints.sql | psql wn2sql
+  ~/wn2sql-0.99.4 $
+
+
+
+*******************************************************************************
+  IBM DB/2
+*******************************************************************************
+
+
+
+First, create a database for the wordnet data, if
+you don't already have one.
+
+  ~/wn2sql-0.99.4 $ db2 create database wn2sql
+  ~/wn2sql-0.99.4 $
+
+Then, you have to run a couple of scripts to create
+the tables and primary key constraints.
+
+
+  ~/wn2sql-0.99.4 $ db2 connect to wn2sql
+    [ ... ]
+  ~/wn2sql-0.99.4 $ cat createtables.sql | db2 -td';'
+  ~/wn2sql-0.99.4 $ cat pk_constraints.sql | db2 -td';'
+  ~/wn2sql-0.99.4 $
+
+Use the appropriate inserter script to create a bunch
+of INSERT statements which we pipe through the db client.
+
+  ~/wn2sql-0.99.4 $ ./db2.sh | db2 -td';' | grep -v 'DB200001'
+  ~/wn2sql-0.99.4 $
+
+Next, we can put some foreign key constraints in place
+
+  ~/wn2sql-0.99.4 $ cat fk_constraints.sql | db2 -td';'
+  ~/wn2sql-0.99.4 $
+
+Finally, a few indices can speed up processing
+
+  ~/wn2sql-0.99.4 $ cat optimizations.sql | db2 -td';'
+
+
+
+*******************************************************************************
+                                         (c) Copyright 2007 by Richard Bergmair
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2 or
+any later version published by the Free Software Foundation;
+*******************************************************************************
